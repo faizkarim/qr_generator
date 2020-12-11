@@ -1,23 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
+import {useHistory} from 'react-router-dom'
 
 import InputFieldComponent from "../components/InputFieldComponent";
 import InputSelectionComponent from "../components/InputSelectionComponent";
-import ButtonComponent from "../components/ButtonComponent";
 
 import "../styles/form_page_style.css";
 
-class FormView extends Component {
-  render() {
-    return (
-      <div className="col-12 col-sm-12 col-lg-6 col-xl-6 right-side-container d-flex justify-content-center align-items-center">
+
+function FormView(){
+  let history = useHistory();
+
+   function handleSubmit() {
+    history.push('/qrformpage')
+  }
+
+  return (
+    <div className="col-12 col-sm-12 col-lg-6 col-xl-6 right-side-container d-flex justify-content-center align-items-center">
         <div className="container p-5 ">
           <div>
             <h3 className="text-left mb-5">Butiran Peperiksaan</h3>
-
-            <form>
+            <form method="GET" onSubmit={handleSubmit}>
               <InputFieldComponent
                 type="text"
                 placeholder="Nama Guru Penyedia"
+                className="form-control"
               />
               <InputSelectionComponent placeholder="Tingkatan" />
               <InputSelectionComponent placeholder="Kelas" />
@@ -26,14 +32,14 @@ class FormView extends Component {
                 type="number"
                 placeholder="Bilangan Pelajar"
                 min ="1"
+                className="form-control"
               />
-              <ButtonComponent />
+             <InputFieldComponent type="submit" className="btn btn-primary form-control"  />
             </form>
           </div>
         </div>
       </div>
-    );
-  }
+  );
 }
 
-export default FormView;
+export default FormView

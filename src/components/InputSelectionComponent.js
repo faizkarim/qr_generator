@@ -6,16 +6,16 @@ class InputSelectionComponent extends Component {
 
     return (
       <div className="form-group mb-4 input-group-lg ">
-        <label className="label-text text-dark" for={props.placeholder}>
+        <label className="label-text text-dark" htmlFor={props.placeholder}>
           {props.placeholder}
         </label>
-        <select class="form-select" required={true}>
-            <option className="text-muted" selected>
+        <select className="form-select" defaultValue={'DEFAULT'} required={true}>
+            <option value='DEFAULT' disabled>
               Pilih {props.placeholder}
             </option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option>One</option>
+            <option >Two</option>
+            <option>Three</option>
         </select>
       </div>
     );

@@ -8,10 +8,10 @@ class InputFieldComponent extends Component {
 
     return (
       <div className="form-group mb-4 input-group-lg ">
-        <label className="label-text" for={props.for}>{props.placeholder}</label>
+        <label className="label-text" htmlFor={props.for}>{props.placeholder}</label>
         <input
           type={props.type}
-          class="form-control"
+          className={props.className}
           id={props.id}
           placeholder={props.placeholder}
           required ={true}
