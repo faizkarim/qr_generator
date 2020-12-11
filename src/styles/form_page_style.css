@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
 }
 
 .left-side-container {
@@ -71,10 +72,22 @@ input[type=number]:focus,
 
 }
 
+table {
+    border-collapse: collapse !important;
+}
+
+table td,table th {
+    border: 1px solid #ddd;
+}
+
+
+
 @media (min-width: 1200px) { 
-    * {
-        overflow: hidden;    
+    
+    .right-side-container {
+        overflow: hidden;
     }
+
     input,button,select {
         width: 430px !important;
     }
