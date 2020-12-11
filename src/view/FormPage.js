@@ -6,7 +6,7 @@ import FormView from  './FormView'
 
 export default function FormPage() {
   return (
-      <div className="row">
+      <div className="row form-view">
         <ImageView/>
         <FormView/>
       </div>
