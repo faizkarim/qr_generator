@@ -1,9 +1,9 @@
-
+import FormPage from './view/FormPage'
 
 function App() {
   return (
     <div>
-      <h1>gg</h1>
+       <FormPage/>
     </div>
   );
 }

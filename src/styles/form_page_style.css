@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.left-side-container {
+    background: url(../assets/images/image.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    padding-top: 25px;
+    padding-left: 25px !important;
+}
+
+.logo {
+    width: 150px;
+}
+
+.right-side-container {
+    padding-top: 25px;
+    padding-left: 25px !important;
+}
+
+.label-text {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+input,option,
+input::-webkit-input-placeholder {
+    font-size: 14px;
+    outline: hidden;
+}
+
+textarea:focus, 
+select:focus,
+textarea.form-control:focus, 
+input.form-control:focus, 
+input[type=text]:focus, 
+input[type=password]:focus, 
+input[type=email]:focus, 
+input[type=number]:focus, 
+[type=text].form-control:focus, 
+[type=password].form-control:focus, 
+[type=email].form-control:focus, 
+[type=tel].form-control:focus, 
+[contenteditable].form-control:focus {
+  box-shadow: inset 0 -1px 0 transparent;
+  outline: #0275D8;
+  background-color: rgba(2, 117, 216,0.1);
+}
+.form-select:focus{
+    box-shadow: inset 0 -1px 0 transparent; 
+    font-size: 14px !important;
+    color: black !important;
+    outline: #0275D8;
+}
+
+.btn-primary {
+    margin-top: 10px;
+    background-color:  #0275D8;
+    border: none;
+}
+
+.form-select{
+    color: gray !important;
+    font-size: 14px !important;
+    height: 50px !important;
+
+}
+
+@media (min-width: 1200px) { 
+    * {
+        overflow: hidden;    
+    }
+    input,button,select {
+        width: 430px !important;
+    }
+
+    .right-side-container .container {
+        display: flex;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .bawah {
+        display:none
+    }
+  } 
+
+
+
