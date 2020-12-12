@@ -13,7 +13,7 @@ class QrFormPage extends Component {
     return (
       <div className="container p-5">
         <div className="col-xl-12 col-lg-12 col-sm-12 col-xs-12 d-flex justify-content-center align-items-center">
-          <QRCode value="" size={200} />
+          <QRCode value={data.toString()} size={200} />
         </div>
         <div className="mt-4">
           <div>
@@ -21,8 +21,8 @@ class QrFormPage extends Component {
           </div>
           <table className="table">
             <tbody>
-              <TableRowComponent th="Mata Pelajaran" td={data.mataPelajaran} />
-              <TableRowComponent th="Kelas" td={data.kelas} />
+              <TableRowComponent th="Mata Pelajaran" td={data.mataPelajaran + " kertas " + data.kertas} />
+              <TableRowComponent th="Kelas" td={data.tingkatan + " " + data.kelas} />
               <TableRowComponent th="Tarikh" />
               <TableRowComponent th="Masa" />
               <TableRowComponent

@@ -22,8 +22,8 @@ export default function SelectionComponent(props) {
   } else if (props.type === "className") {
     return props.data.map((val, i) => {
       return (
-        <option key={val.id} value={val.subject_name}>
-          asda
+        <option key={val.id} value={val.class_name}>
+          {val.class_name}
         </option>
       );
     });
