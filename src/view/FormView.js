@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import {firestore} from '../firebase'
-
+import { firestore } from "../firebase";
 
 import ButtonComponent from "../components/ButtonComponent";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
+import SelectionComponent from "../components/SelectionComponent";
 
 import "../styles/form_page_style.css";
 
@@ -14,14 +14,71 @@ function FormView() {
   let history = useHistory();
   const emptyText = "tidak boleh kosong";
 
-  useEffect(()=>{
+  const [lowerSubject, setLowerSubject] = useState([]);
+  const [upperSubject,setUpperSubject] = useState([]);
+  const [className, setClassName] = useState([]);
+  const [tingkatan, setTingkatan] = useState('');
 
-  },[])
+  useEffect(() => {
+    getLowerSubject();
+    getUpperSubject();
+    getClassName();
+  }, []);
+
+  // fetch lower subject
+  async function getLowerSubject() {
+    const snapshot = await firestore.collection("lower_subject").get();
+
+    const lowerSubjectList = snapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
+    });
+
+    setLowerSubject(lowerSubjectList);
+  }
+
+  //fetch upper subject
+  async function getUpperSubject() {
+    const snapshot = await firestore.collection("upper_subject").get();
+
+    const upperSubjectList = snapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
+    });
+
+    setUpperSubject(upperSubjectList);
+  }
+
+  //fetch class name
+  async function getClassName() {
+    const snapshot = await firestore.collection("class_name").get();
+
+    const classNameList = snapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
+    });
+
+    setClassName(classNameList);
+  }
 
 
-  // function getLowerSubject = () =>{
-    
-  // }
+
+
+
+
+  const customInput = (props) => {
+    setTingkatan(props.value)
+
+    return (
+      <select  className="form-select" type="select" {...props}>
+        <option value="" disabled>
+          Pilih Tingkatan
+        </option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    );
+  };
 
   return (
     <div className="col-12 col-sm-12 col-lg-6 col-xl-6 right-side-container d-flex justify-content-center align-items-center">
@@ -46,7 +103,7 @@ function FormView() {
             ),
           })}
           onSubmit={(values, { setSubmitting }) => {
-              history.push('/qrformpage',values)
+            history.push("/qrformpage", values);
           }}
         >
           <Form>
@@ -73,16 +130,10 @@ function FormView() {
               <label className="label-text text-dark" htmlFor="tingkatan">
                 Tingkatan
               </label>
-              <Field name="tingkatan" as="select" className="form-select">
-                <option value="" disabled>
-                  Pilih Tingkatan
-                </option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="2">4</option>
-                <option value="3">5</option>
-              </Field>
+              <Field
+                name="tingkatan"
+                as={customInput}
+              />
               <ErrorMessageComponent name="tingkatan" />
             </div>
 
@@ -94,11 +145,7 @@ function FormView() {
                 <option value="" disabled>
                   Pilih Kelas
                 </option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="2">4</option>
-                <option value="3">5</option>
+                <SelectionComponent data={[]} type="className" />
               </Field>
               <ErrorMessageComponent name="kelas" />
             </div>
@@ -116,15 +163,10 @@ function FormView() {
                 <option value="" disabled>
                   Pilih Mata Pelajaran
                 </option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="2">4</option>
-                <option value="3">5</option>
+                <SelectionComponent data={[lowerSubject,upperSubject]} type="subject" tingkatan={tingkatan} />
               </Field>
               <ErrorMessageComponent name="mataPelajaran" />
             </div>
-
             <div className="form-group mt-4 input-group-lg ">
               <label className="label-text text-dark" htmlFor="bilanganPelajar">
                 Bilangan Pelajar
@@ -140,7 +182,6 @@ function FormView() {
 
             <ButtonComponent />
           </Form>
-         
         </Formik>
       </div>
     </div>
