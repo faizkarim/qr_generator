@@ -4,7 +4,7 @@ export default function TableRowComponent(props) {
   return (
     <tr>
       <td className="col-6 text-dark">{props.th}</td>
-      <td className="text-capitalize col-6 text-dark fw-bold">{props.td}</td>
+      <td className="text-capitalize col-6 text-dark">{props.td}</td>
     </tr>
   );
 }

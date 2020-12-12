@@ -15,9 +15,9 @@ function FormView() {
   const emptyText = "tidak boleh kosong";
 
   const [lowerSubject, setLowerSubject] = useState([]);
-  const [upperSubject,setUpperSubject] = useState([]);
+  const [upperSubject, setUpperSubject] = useState([]);
   const [className, setClassName] = useState([]);
-  const [tingkatan, setTingkatan] = useState('');
+  const [tingkatan, setTingkatan] = useState("");
 
   useEffect(() => {
     getLowerSubject();
@@ -27,7 +27,7 @@ function FormView() {
 
   // fetch lower subject
   async function getLowerSubject() {
-    const snapshot = await firestore.collection("lower_subject").get();
+    const snapshot = await firestore.collection("lower_subject").orderBy('subject_name').get();
 
     const lowerSubjectList = snapshot.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
@@ -38,7 +38,7 @@ function FormView() {
 
   //fetch upper subject
   async function getUpperSubject() {
-    const snapshot = await firestore.collection("upper_subject").get();
+    const snapshot = await firestore.collection("upper_subject").orderBy('subject_name').get();
 
     const upperSubjectList = snapshot.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
@@ -49,7 +49,10 @@ function FormView() {
 
   //fetch class name
   async function getClassName() {
-    const snapshot = await firestore.collection("class_name").get();
+    const snapshot = await firestore
+      .collection("class_name")
+      .orderBy("class_name")
+      .get();
 
     const classNameList = snapshot.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
@@ -58,16 +61,11 @@ function FormView() {
     setClassName(classNameList);
   }
 
-
-
-
-
-
   const customInput = (props) => {
-    setTingkatan(props.value)
+    setTingkatan(props.value);
 
     return (
-      <select  className="form-select" type="select" {...props}>
+      <select className="form-select" type="select" {...props}>
         <option value="" disabled>
           Pilih Tingkatan
         </option>
@@ -89,6 +87,7 @@ function FormView() {
             tingkatan: "",
             kelas: "",
             mataPelajaran: "",
+            kertas :"",
             bilanganPelajar: "",
           }}
           validationSchema={Yup.object({
@@ -98,6 +97,7 @@ function FormView() {
             tingkatan: Yup.string().required("Tingkatan " + emptyText),
             kelas: Yup.string().required("Kelas " + emptyText),
             mataPelajaran: Yup.string().required("Mata Pelajaran " + emptyText),
+            kertas: Yup.string().required("Kertas " + emptyText),
             bilanganPelajar: Yup.number().required(
               "Bilangan Pelajar " + emptyText
             ),
@@ -130,10 +130,7 @@ function FormView() {
               <label className="label-text text-dark" htmlFor="tingkatan">
                 Tingkatan
               </label>
-              <Field
-                name="tingkatan"
-                as={customInput}
-              />
+              <Field name="tingkatan" as={customInput} />
               <ErrorMessageComponent name="tingkatan" />
             </div>
 
@@ -145,7 +142,7 @@ function FormView() {
                 <option value="" disabled>
                   Pilih Kelas
                 </option>
-                <SelectionComponent data={[]} type="className" />
+                <SelectionComponent data={className} type="className" />
               </Field>
               <ErrorMessageComponent name="kelas" />
             </div>
@@ -163,10 +160,36 @@ function FormView() {
                 <option value="" disabled>
                   Pilih Mata Pelajaran
                 </option>
-                <SelectionComponent data={[lowerSubject,upperSubject]} type="subject" tingkatan={tingkatan} />
+                <SelectionComponent
+                  data={[lowerSubject, upperSubject]}
+                  type="subject"
+                  tingkatan={tingkatan}
+                />
               </Field>
               <ErrorMessageComponent name="mataPelajaran" />
             </div>
+
+            <div className="form-group mt-4 input-group-lg ">
+              <label className="label-text text-dark" htmlFor="kertas">
+                Kertas
+              </label>
+              <Field
+                name="kertas"
+                placeholder="Pilih Kertas"
+                as="select"
+                className="form-select"
+              >
+                <option value="" disabled>
+                  Pilih Kertas
+                </option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="-">-</option>
+              </Field>
+              <ErrorMessageComponent name="kertas" />
+            </div>
+
             <div className="form-group mt-4 input-group-lg ">
               <label className="label-text text-dark" htmlFor="bilanganPelajar">
                 Bilangan Pelajar
