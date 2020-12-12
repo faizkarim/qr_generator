@@ -11,7 +11,6 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    /* height: 100vh; */
     padding-top: 25px;
     padding-left: 25px !important;
 }
@@ -93,10 +92,18 @@ table td {
     border: 1px solid #ddd;
 }
 
+@media only screen and (max-width: 992px) {
+    .left-side-container{
+        height: 60vh;
+        overflow: hidden;
+    }
+}
+
+
 
 @media (min-width: 1200px) { 
     
-    .right-side-container {
+    .right-side-container,.left-side-container {
         overflow: hidden;
     }
 
