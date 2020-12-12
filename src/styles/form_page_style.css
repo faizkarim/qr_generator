@@ -10,9 +10,14 @@
     background: url(../assets/images/image.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    background-position: center;
+    /* height: 100vh; */
     padding-top: 25px;
     padding-left: 25px !important;
+}
+
+.form-view{
+    height: 100vh;
 }
 
 .logo {
@@ -34,6 +39,11 @@ input::-webkit-input-placeholder {
     font-size: 14px;
     outline: hidden;
 }
+
+.btn:focus {
+    box-shadow: none;
+    outline: none;
+  }
 
 textarea:focus, 
 select:focus,
@@ -69,17 +79,19 @@ input[type=number]:focus,
     color: gray !important;
     font-size: 14px !important;
     height: 50px !important;
+}
 
+.text-danger {
+    color: red !important;
 }
 
 table {
     border-collapse: collapse !important;
 }
 
-table td,table th {
+table td {
     border: 1px solid #ddd;
 }
-
 
 
 @media (min-width: 1200px) { 
