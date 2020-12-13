@@ -13,7 +13,7 @@ class QrFormPage extends Component {
     return (
       <div className="container p-5">
         <div className="col-xl-12 col-lg-12 col-sm-12 col-xs-12 d-flex justify-content-center align-items-center">
-          <QRCode value={data.toString()} size={200} />
+          <QRCode value={JSON.stringify(data)} size={200} />
         </div>
         <div className="mt-4">
           <div>

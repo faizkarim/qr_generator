@@ -2,10 +2,11 @@ import React, { Component } from "react";
 
 class ButtonComponent extends Component {
   render() {
+    const props = this.props;
     return (
       <div className="input-group-lg mt-4">
-        <button type="submit" className="btn btn-primary fw-bold form-control">
-          Jana Kod QR
+        <button type={props.type} className= {props.class}>
+          {props.title}
         </button>
       </div>
     );
