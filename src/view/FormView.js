@@ -18,6 +18,7 @@ function FormView() {
   const [upperSubject, setUpperSubject] = useState([]);
   const [className, setClassName] = useState([]);
   const [tingkatan, setTingkatan] = useState("");
+  const [disable, setDisable] = useState(true);
 
   useEffect(() => {
     getLowerSubject();
@@ -68,8 +69,10 @@ function FormView() {
   }
 
   const customInput = (props) => {
+    if(props.value !== ""){
+      setDisable(false)
+    }
     setTingkatan(props.value);
-
     return (
       <select className="form-select" type="select" {...props}>
         <option value="" disabled>
@@ -173,14 +176,23 @@ function FormView() {
                 as="select"
                 className="form-select"
               >
-                <option value="" disabled>
-                  Pilih Mata Pelajaran
-                </option>
-                <SelectionComponent
-                  data={[lowerSubject, upperSubject]}
-                  type="subject"
-                  tingkatan={tingkatan}
-                />
+                {({ field, form, meta }) => (
+                  
+                  <div>
+                    <select className="form-select" {...field} disabled={disable} >
+                      <option value="" disabled>
+                        Pilih Mata Pelajaran
+                      </option>
+                      
+                    <SelectionComponent
+                      data={[lowerSubject, upperSubject]}
+                      type="subject"
+                      tingkatan={tingkatan}
+                    />
+
+                    </select>
+                  </div>
+                )}
               </Field>
               <ErrorMessageComponent name="mataPelajaran" />
             </div>
