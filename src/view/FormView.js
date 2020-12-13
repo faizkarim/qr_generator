@@ -27,7 +27,10 @@ function FormView() {
 
   // fetch lower subject
   async function getLowerSubject() {
-    const snapshot = await firestore.collection("lower_subject").orderBy('subject_name').get();
+    const snapshot = await firestore
+      .collection("lower_subject")
+      .orderBy("subject_name")
+      .get();
 
     const lowerSubjectList = snapshot.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
@@ -38,7 +41,10 @@ function FormView() {
 
   //fetch upper subject
   async function getUpperSubject() {
-    const snapshot = await firestore.collection("upper_subject").orderBy('subject_name').get();
+    const snapshot = await firestore
+      .collection("upper_subject")
+      .orderBy("subject_name")
+      .get();
 
     const upperSubjectList = snapshot.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
@@ -87,7 +93,7 @@ function FormView() {
             tingkatan: "",
             kelas: "",
             mataPelajaran: "",
-            kertas :"",
+            kertas: "",
             bilanganPelajar: "",
           }}
           validationSchema={Yup.object({
@@ -102,7 +108,17 @@ function FormView() {
               "Bilangan Pelajar " + emptyText
             ),
           })}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, action) => {
+            action.resetForm({
+              values: {
+                namaGuruPenyedia: "",
+                tingkatan: "",
+                kelas: "",
+                mataPelajaran: "",
+                kertas: "",
+                bilanganPelajar: "",
+              },
+            });
             history.push("/qrformpage", values);
           }}
         >
@@ -203,7 +219,18 @@ function FormView() {
               <ErrorMessageComponent name="bilanganPelajar" />
             </div>
 
-            <ButtonComponent />
+            <div className="d-flex mt-2 justify-content-between align-items-center">
+              <ButtonComponent
+                class="btn text-muted fs-6"
+                title="Kosongkan"
+                type="reset"
+              />
+              <ButtonComponent
+                class="btn btn-primary fw-bold fs-6"
+                title="Jana Kod Qr"
+                type="submit"
+              />
+            </div>
           </Form>
         </Formik>
       </div>
