@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { firestore } from "../firebase";
+import firebase from 'firebase/app'
 
 import ButtonComponent from "../components/ButtonComponent";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
@@ -68,9 +69,29 @@ function FormView() {
     setClassName(classNameList);
   }
 
+  async function insertIntoFirestore(data) {
+    const newObj = {
+      'nama_guru_pengutipan' : '',
+      'nama_guru_penyediaan' : '',
+      'nama_guru_penyerahan' : '',
+      'created_at' : firebase.firestore.Timestamp.now(new Date()),
+      'updated_at' : firebase.firestore.Timestamp.now(new Date()),
+    }
+    const newData = Object.assign(data,newObj)
+    await firestore.collection("paper_details").add(newData);
+  }
+
+  function popUpModal(values) {
+    var result = window.confirm("Adakah anda ingin meneruskan ?");
+    if (result === true) {
+      insertIntoFirestore(values);
+      history.push("/qrformpage", values);
+    }
+  }
+
   const customInput = (props) => {
-    if(props.value !== ""){
-      setDisable(false)
+    if (props.value !== "") {
+      setDisable(false);
     }
     setTingkatan(props.value);
     return (
@@ -92,37 +113,37 @@ function FormView() {
       <div className="container p-5 ">
         <Formik
           initialValues={{
-            namaGuruPenyedia: "",
+            nama_guru_penyedia: "",
             tingkatan: "",
             kelas: "",
-            mataPelajaran: "",
+            mata_pelajaran: "",
             kertas: "",
-            bilanganPelajar: "",
+            bilangan_pelajar: "",
           }}
           validationSchema={Yup.object({
-            namaGuruPenyedia: Yup.string().required(
+            nama_guru_penyedia: Yup.string().required(
               "Nama Guru Penyedia " + emptyText
             ),
             tingkatan: Yup.string().required("Tingkatan " + emptyText),
             kelas: Yup.string().required("Kelas " + emptyText),
-            mataPelajaran: Yup.string().required("Mata Pelajaran " + emptyText),
+            mata_pelajaran: Yup.string().required("Mata Pelajaran " + emptyText),
             kertas: Yup.string().required("Kertas " + emptyText),
-            bilanganPelajar: Yup.number().required(
+            bilangan_pelajar: Yup.number().required(
               "Bilangan Pelajar " + emptyText
             ),
           })}
           onSubmit={(values, action) => {
             action.resetForm({
               values: {
-                namaGuruPenyedia: "",
+                nama_guru_penyedia: "",
                 tingkatan: "",
                 kelas: "",
-                mataPelajaran: "",
+                mata_pelajaran: "",
                 kertas: "",
-                bilanganPelajar: "",
+                bilangan_pelajar: "",
               },
             });
-            history.push("/qrformpage", values);
+            popUpModal(values);
           }}
         >
           <Form>
@@ -132,17 +153,17 @@ function FormView() {
             <div className="form-group mt-4 input-group-lg ">
               <label
                 className="label-text text-dark"
-                htmlFor="namaGuruPenyedia"
+                htmlFor="nama_guru_penyedia"
               >
                 Nama Guru Penyedia
               </label>
               <Field
-                name="namaGuruPenyedia"
+                name="nama_guru_penyedia"
                 className="form-control"
                 placeholder="Nama Guru Penyedia"
                 type="text"
               />
-              <ErrorMessageComponent name="namaGuruPenyedia" />
+              <ErrorMessageComponent name="nama_guru_penyedia" />
             </div>
 
             <div className="form-group mt-4 input-group-lg ">
@@ -167,34 +188,36 @@ function FormView() {
             </div>
 
             <div className="form-group mt-4 input-group-lg ">
-              <label className="label-text text-dark" htmlFor="mataPelajaran">
+              <label className="label-text text-dark" htmlFor="mata_pelajaran">
                 Mata Pelajaran
               </label>
               <Field
-                name="mataPelajaran"
+                name="mata_pelajaran"
                 placeholder="Mata Pelajaran"
                 as="select"
                 className="form-select"
               >
                 {({ field, form, meta }) => (
-                  
                   <div>
-                    <select className="form-select" {...field} disabled={disable} >
+                    <select
+                      className="form-select"
+                      {...field}
+                      disabled={disable}
+                    >
                       <option value="" disabled>
                         Pilih Mata Pelajaran
                       </option>
-                      
-                    <SelectionComponent
-                      data={[lowerSubject, upperSubject]}
-                      type="subject"
-                      tingkatan={tingkatan}
-                    />
 
+                      <SelectionComponent
+                        data={[lowerSubject, upperSubject]}
+                        type="subject"
+                        tingkatan={tingkatan}
+                      />
                     </select>
                   </div>
                 )}
               </Field>
-              <ErrorMessageComponent name="mataPelajaran" />
+              <ErrorMessageComponent name="mata_pelajaran" />
             </div>
 
             <div className="form-group mt-4 input-group-lg ">
@@ -219,16 +242,16 @@ function FormView() {
             </div>
 
             <div className="form-group mt-4 input-group-lg ">
-              <label className="label-text text-dark" htmlFor="bilanganPelajar">
+              <label className="label-text text-dark" htmlFor="bilangan_pelajar">
                 Bilangan Pelajar
               </label>
               <Field
-                name="bilanganPelajar"
+                name="bilangan_pelajar"
                 className="form-control"
                 placeholder="Bilangan Pelajar"
                 type="number"
               />
-              <ErrorMessageComponent name="bilanganPelajar" />
+              <ErrorMessageComponent name="bilangan_pelajar" />
             </div>
 
             <div className="d-flex mt-2 justify-content-between align-items-center">

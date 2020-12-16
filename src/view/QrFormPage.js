@@ -21,13 +21,13 @@ class QrFormPage extends Component {
           </div>
           <table className="table">
             <tbody>
-              <TableRowComponent th="Mata Pelajaran" td={data.mataPelajaran + " kertas " + data.kertas} />
+              <TableRowComponent th="Mata Pelajaran" td={data.mata_pelajaran + " kertas " + data.kertas} />
               <TableRowComponent th="Kelas" td={data.tingkatan + " " + data.kelas} />
               <TableRowComponent th="Tarikh" />
               <TableRowComponent th="Masa" />
               <TableRowComponent
                 th="Bilangan Pelajar"
-                td={data.bilanganPelajar}
+                td={data.bilangan_pelajar}
               />
               <TableRowComponent th="Bilangan Kertas Yang Dijawab" />
             </tbody>
@@ -42,7 +42,7 @@ class QrFormPage extends Component {
             <tbody>
               <TableRowComponent
                 th="Nama Guru Penyedia Soalan"
-                td={data.namaGuruPenyedia}
+                td={data.nama_guru_penyedia}
               />
               <TableRowComponent th="Nama Guru Yang Memulakan Ujian" />
               <TableRowComponent th="Nama Guru Yang Menamatkan Ujian" />
