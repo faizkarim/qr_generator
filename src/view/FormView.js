@@ -4,6 +4,8 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { firestore } from "../firebase";
 import firebase from 'firebase/app'
+import { v4 as uuidv4 } from 'uuid';
+
 
 import ButtonComponent from "../components/ButtonComponent";
 import ErrorMessageComponent from "../components/ErrorMessageComponent";
@@ -70,13 +72,29 @@ function FormView() {
   }
 
   async function insertIntoFirestore(data) {
+
+    const timestamp = firebase.firestore.Timestamp;
+  
     const newObj = {
-      'nama_guru_pengutipan' : '',
-      'nama_guru_penyediaan' : '',
-      'nama_guru_penyerahan' : '',
-      'created_at' : firebase.firestore.Timestamp.now(new Date()),
-      'updated_at' : firebase.firestore.Timestamp.now(new Date()),
+      'pengutipan' : {
+        'nama_guru_pengutipan' : '',
+        'created_at' : null,
+        'updated_at' :null,
+      },
+      'penyediaan' : {
+        'nama_guru_penyediaan' : '',
+        'created_at' : null,
+        'updated_at' : null,
+      },
+      'penyerahan' : {
+        'nama_guru_penyerahan' : '',
+        'created_at' : null,
+        'updated_at' :null,
+      },
+      'created_at' : timestamp.now(new Date()),
+      'updated_at' : timestamp.now(new Date()),
     }
+
     const newData = Object.assign(data,newObj)
     await firestore.collection("paper_details").add(newData);
   }
@@ -113,6 +131,7 @@ function FormView() {
       <div className="container p-5 ">
         <Formik
           initialValues={{
+            id: uuidv4(),
             nama_guru_penyedia: "",
             tingkatan: "",
             kelas: "",
